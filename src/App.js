@@ -53,14 +53,7 @@ class App extends React.Component {
 
     return (
       <div>
-        {/* {this.renderCharacters(characters)} */}
-        {characters && characters.length ? (
-          characters.map((character) => (
-            <CharacterList key={character.id} character={character} />
-          ))
-        ) : (
-          <div>No data</div>
-        )}
+        <CharacterList characters={characters} />
       </div>
     );
   }
