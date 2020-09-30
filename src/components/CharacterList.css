@@ -1,6 +1,30 @@
 .Character {
-    cursor: pointer;
-    color: green;
-    
+  /* cursor: pointer;
+  color: green;
+  overflow: hidden; */
 }
 
+.body {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 30px;
+}
+
+.listStyle {
+  flex: 2;
+  background-color: rgba(202, 228, 172, 0.8);
+  margin-right: 30px;
+  border-radius: 10px;
+  
+}
+
+.windowStyle {
+  flex: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(170, 125, 125);
+  border-radius: 10px;
+  background-color: beige;
+}

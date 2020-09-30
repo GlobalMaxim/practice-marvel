@@ -50,7 +50,7 @@ class App extends React.Component {
 
   render() {
     const { characters } = this.state;
-
+    
     return (
       <div>
         <CharacterList characters={characters} />

@@ -1,34 +1,26 @@
-import React, { useState } from "react";
-import classes from "../components/Character.module.css";
+import React from "react";
+import "../components/Character.css";
 
-const Character = ({ character }) => {
-  const [isCharacterVisible, setCharacterVisibility] = useState(false);
-
-  const blockStyle = {
-    display: "none",
-  };
-
+const Character = ({ character, onZhopa, activeListItem }) => {
   const showCharacter = () => {
-    console.log(classes);
-    setCharacterVisibility(!isCharacterVisible);
+    console.log("activeListItem: ", activeListItem);
+    if (!activeListItem) {
+      return onZhopa(character);
+    }
+    if (character.id === activeListItem.id) {
+      return onZhopa(null);
+    }
+    return onZhopa(character);
   };
 
   return (
     <div
-      className="container"
+      className="container "
       id={character.id}
       onClick={() => showCharacter()}
     >
-      <div className="row">
-        <div className="col-4">
-          {character.name}
-          {character.id}
-        </div>
-        {isCharacterVisible ? (
-          <div className="col-8">
-            <div className={classes.inner}>{character.modified}</div>
-          </div>
-        ) : null}
+      <div className="row ">
+        <div className="styleCharacter">{character.name}</div>
       </div>
     </div>
   );
