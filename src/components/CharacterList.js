@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../components/CharacterList.css";
 import Character from "./Character";
+import Table from "react-bootstrap/Table";
 
 const CharacterList = ({ characters }) => {
   const [activeListItem, setActiveListItem] = useState(null);
@@ -8,21 +9,25 @@ const CharacterList = ({ characters }) => {
   const renderCharacters = () =>
     characters && characters.length > 0 ? (
       <div className="body">
-        <div className="listStyle">
-          {characters.map((character) => (
-            <Character
-              onZhopa={setActiveListItem}
-              character={character}
-              activeListItem={activeListItem}
-            />
-          ))}
-        </div>
+        <Table striped bordered hover style={{ width: "800" }}>
+          <tbody style={{width: "100%", alignItems:'center'}}>
+            {characters.map((character, index) => (
+              <Character
+                onShow={setActiveListItem}
+                character={character}
+                activeListItem={activeListItem}
+                key={index}
+                id={index}
+              />
+            ))}
+          </tbody>
+        </Table>
 
-        {activeListItem ? (
+        {/* {activeListItem ? (
           <div className="windowStyle">
             {activeListItem ? (
-              <div style={{color: 'black'}}>
-                <div >
+              <div style={{ color: "black" }}>
+                <div>
                   <h3>ID персонажа: </h3>
                   {activeListItem.id}
                 </div>
@@ -33,9 +38,7 @@ const CharacterList = ({ characters }) => {
               </div>
             ) : null}
           </div>
-        ) : (
-          <div style={{ flex: 7 }}></div>
-        )}
+        ) : null} */}
       </div>
     ) : null;
 

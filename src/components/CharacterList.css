@@ -6,20 +6,20 @@
 
 .body {
   display: flex;
-  justify-content: space-between;
-  flex-direction: row;
+  justify-content: center;
+  flex-direction: column;
   padding: 30px;
 }
 
-.listStyle {
+/* .listStyle {
   flex: 2;
   background-color: rgba(202, 228, 172, 0.8);
   margin-right: 30px;
   border-radius: 10px;
   
-}
+} */
 
-.windowStyle {
+/* .windowStyle {
   flex: 8;
   display: flex;
   justify-content: center;
@@ -27,4 +27,4 @@
   border: 1px solid rgb(170, 125, 125);
   border-radius: 10px;
   background-color: beige;
-}
+} */

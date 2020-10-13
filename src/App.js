@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import CharacterList from "./components/CharacterList";
+import { Redirect, Route, Switch } from "react-router-dom";
+import CharacterDetails from "./components/CharacterDetails";
 
 // const API_KEY = ""
 
@@ -50,11 +52,23 @@ class App extends React.Component {
 
   render() {
     const { characters } = this.state;
-    
+
     return (
-      <div>
-        <CharacterList characters={characters} />
-      </div>
+      <Switch>
+        <div>
+          <Redirect from="/" to="/characters" />
+          <Route
+            exact
+            path="/characters"
+            render={() => <CharacterList characters={characters} />}
+          />
+          {/* <CharacterList characters={characters} /> */}
+          <Route
+            path="/characters/:id"
+            render={() => <CharacterDetails character={characters} />}
+          />
+        </div>
+      </Switch>
     );
   }
 }

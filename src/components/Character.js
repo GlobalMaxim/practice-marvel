@@ -1,27 +1,40 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "../components/Character.css";
+import Button from "../components/UI/Button/Button";
 
-const Character = ({ character, onZhopa, activeListItem }) => {
+
+
+const Character = ({ character, onShow, activeListItem, id }) => {
   const showCharacter = () => {
     console.log("activeListItem: ", activeListItem);
     if (!activeListItem) {
-      return onZhopa(character);
+      return onShow(character);
     }
     if (character.id === activeListItem.id) {
-      return onZhopa(null);
+      return onShow(null);
     }
-    return onZhopa(character);
+    return onShow(character);
   };
 
   return (
-    <div
-      className="container "
-      id={character.id}
-      onClick={() => showCharacter()}
-    >
-      <div className="row ">
-        <div className="styleCharacter">{character.name}</div>
-      </div>
+    <div id={character.id} onClick={() => showCharacter()}>
+      {/* <div className="row ">
+        <div className="">
+          {id + 1}
+          {character.name}
+        </div>
+      </div> */}
+
+      <td style={{ width: "10%" }}>{id + 1}</td>
+      <td style={{ width: "90%" }}>{character.name}</td>
+      <td>
+        <NavLink to={"/characters/" + character.id}>
+          <Button type="primary">
+            Посмотреть
+          </Button>
+        </NavLink>
+      </td>
     </div>
   );
 };
