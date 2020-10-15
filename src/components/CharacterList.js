@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import "../components/CharacterList.css";
 import Character from "./Character";
 import Table from "react-bootstrap/Table";
+import Spinner from "./UI/Spinner/Spinner";
 
-const CharacterList = ({ characters }) => {
+const CharacterList = ({ characters, isLoaded }) => {
   const [activeListItem, setActiveListItem] = useState(null);
 
   const renderCharacters = () =>
     characters && characters.length > 0 ? (
       <div className="body">
         <Table striped bordered hover style={{ width: "800" }}>
-          <tbody style={{width: "100%", alignItems:'center'}}>
+          <tbody style={{ width: "100%", alignItems: "center" }}>
             {characters.map((character, index) => (
               <Character
                 onShow={setActiveListItem}
@@ -42,6 +43,16 @@ const CharacterList = ({ characters }) => {
       </div>
     ) : null;
 
-  return <div className="Character">{renderCharacters()}</div>;
+  return (
+    <div className="Character">
+      {isLoaded ? (
+        <div style={{ position: "absolute", top: "50%", left: "50%" }}>
+          <Spinner />
+        </div>
+      ) : (
+        renderCharacters()
+      )}
+    </div>
+  );
 };
 export default CharacterList;

@@ -1,11 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../components/Character.css";
+import "../components/Character.module.css";
 import Button from "../components/UI/Button/Button";
 
 
 
+
 const Character = ({ character, onShow, activeListItem, id }) => {
+  
   const showCharacter = () => {
     console.log("activeListItem: ", activeListItem);
     if (!activeListItem) {
@@ -18,6 +20,7 @@ const Character = ({ character, onShow, activeListItem, id }) => {
   };
 
   return (
+    
     <div id={character.id} onClick={() => showCharacter()}>
       {/* <div className="row ">
         <div className="">
