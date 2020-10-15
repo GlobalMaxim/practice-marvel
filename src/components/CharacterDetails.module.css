@@ -9,10 +9,12 @@
 .CharacterWindow {
     position: relative;
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
     border: 1px solid #3b3838;
     width: 50%;
-    height: 600px;
+    min-height: 600px;
+    height: 100%;
     margin: 20px 0;
     padding: 20px;
 }

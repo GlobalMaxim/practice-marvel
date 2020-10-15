@@ -5,7 +5,8 @@ const CharacterComics = (props) => {
 
   useEffect(() => {
     getComics();
-  }, [comics]);
+    return comics;
+  }, []);
 
   const getComics = async () => {
     try {
@@ -15,22 +16,23 @@ const CharacterComics = (props) => {
         .then((res) => res.json())
         .catch((err) => console.log(err));
       setComics(data.data.results);
-      console.log("comics:", data);
+      // console.log("comics:", data.data.results);
     } catch (err) {
       console.log(err);
     }
   };
 
   const renderComics = () => {
-    comics.map((comics, index) => {
-      console.log();
-      return (
-        <div>
-          <h2>{comics.diamondCode}</h2>
-        </div>
-      );
-    });
-    return;
+    console.log(comics);
+    return (
+      <div>
+        <h3>Список комиксов:</h3>
+        {comics.map((comics, index) => (
+          
+          <p style={{fontSize:'16'}}>{comics.diamondCode}</p>
+        ))}
+      </div>
+    );
   };
 
   return <div>{renderComics()}</div>;
