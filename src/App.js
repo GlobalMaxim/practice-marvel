@@ -60,15 +60,17 @@ class App extends React.Component {
     return (
       <Switch>
         <div>
-          <Redirect from="/" to="/characters" />
+          <Route exact path="/characters/:id" component={CharacterDetails} />
           <Route
             exact
-            path="/characters"
-            render={() => <CharacterList characters={characters} isLoaded={this.state.loading} />}
+            path={["/",'/characters']}
+            render={() => (
+              <CharacterList
+                characters={characters}
+                isLoaded={this.state.loading}
+              />
+            )}
           />
-
-          {/* <CharacterList characters={characters} /> */}
-          <Route path="/characters/:id" component={CharacterDetails} />
         </div>
       </Switch>
     );

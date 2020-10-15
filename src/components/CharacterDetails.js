@@ -24,14 +24,14 @@ const CharacterDetails = () => {
         <div>
           <img src={image} />
         </div>
-        <div>
-          <h3>
+        <div className={classes.info}>
+          <h5 style={{fontWeight: 'bold'}}>
             Имя: <span>{name}</span>
-          </h3>
-          <h4>
+          </h5>
+          <h5 style={{fontWeight: 'bold'}}>
             ID: <span>{id}</span>
-          </h4>
-          <CharacterComics id={id}/>
+          </h5>
+          <CharacterComics id={id} />
         </div>
         <div style={{ position: "absolute", bottom: 10, left: 30 }}>
           <NavLink to={"/characters"}>
