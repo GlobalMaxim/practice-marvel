@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../components/Character.module.css";
-import Button from "../components/UI/Button/Button";
+import "../Character/Character.module.css";
+import Button from "../UI/Button/Button";
 
 
 

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import CharacterList from "./CharacterList";
 import { useParams } from "react-router-dom";
 import classes from "./CharacterDetails.module.css";
 import { NavLink } from "react-router-dom";
-import Button from "../components/UI/Button/Button";
-import Spinner from "./UI/Spinner/Spinner";
-import CharacterComics from "./CharacterComics";
+import Button from "../UI/Button/Button";
+import Spinner from "../UI/Spinner/Spinner";
+import CharacterComics from "../CharacterComics/CharacterComics";
 
 const CharacterDetails = () => {
   const [image, setImage] = useState(null);
@@ -25,10 +24,10 @@ const CharacterDetails = () => {
           <img src={image} />
         </div>
         <div className={classes.info}>
-          <h5 style={{fontWeight: 'bold'}}>
+          <h5 style={{ fontWeight: "bold" }}>
             Имя: <span>{name}</span>
           </h5>
-          <h5 style={{fontWeight: 'bold'}}>
+          <h5 style={{ fontWeight: "bold" }}>
             ID: <span>{id}</span>
           </h5>
           <CharacterComics id={id} />

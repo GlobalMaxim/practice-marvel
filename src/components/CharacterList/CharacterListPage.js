@@ -1,15 +1,24 @@
 import React, { useState } from "react";
-import "../components/CharacterList.css";
-import Character from "./Character";
+import classes from "../CharacterList/CharacterList.module.css";
+import Character from "../Character/Character";
 import Table from "react-bootstrap/Table";
-import Spinner from "./UI/Spinner/Spinner";
+import Spinner from "../UI/Spinner/Spinner";
 
-const CharacterList = ({ characters, isLoaded }) => {
+const CharacterList = ({ characters, isLoaded, pages, currentPage }) => {
   const [activeListItem, setActiveListItem] = useState(null);
 
   const renderCharacters = () =>
     characters && characters.length > 0 ? (
-      <div className="body">
+      <div className={classes.body}>
+        <div>
+          {pages.map((p) => {
+            return (
+              <span className={currentPage === p && classes.activeClass}>
+                {p}
+              </span>
+            );
+          })}
+        </div>
         <Table striped bordered hover style={{ width: "800" }}>
           <tbody style={{ width: "100%", alignItems: "center" }}>
             {characters.map((character, index) => (
@@ -44,7 +53,7 @@ const CharacterList = ({ characters, isLoaded }) => {
     ) : null;
 
   return (
-    <div className="Character">
+    <div className={classes.Character}>
       {isLoaded ? (
         <div style={{ position: "absolute", top: "50%", left: "50%" }}>
           <Spinner />

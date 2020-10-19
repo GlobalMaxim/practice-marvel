@@ -1,25 +1,10 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import CharacterList from "./components/CharacterList";
+import CharacterList from "./components/CharacterList/CharacterListPage";
 import { Redirect, Route, Switch } from "react-router-dom";
-import CharacterDetails from "./components/CharacterDetails";
+import CharacterDetails from "./components/CharacterDetails/CharacterDetails";
 import Spinner from "./components/UI/Spinner/Spinner";
-
-// const API_KEY = ""
-
-// const Character = ({ character }) => {
-//   const { id, name } = character;
-//   const showCharacter = (character) => {
-//     console.log("character: ", character);
-//   };
-
-//   return (
-//     <div onClick={() => showCharacter(character)} key={id}>
-//       {name}
-//     </div>
-//   );
-// };
+import MarvelService from "./services/MarvelService.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -27,35 +12,49 @@ class App extends React.Component {
     this.state = {
       characters: null,
       loading: true,
+      total: null,
+      count: null,
+      limit: null,
+      currentPage: 1,
     };
   }
 
   componentDidMount() {
-    this.gettingHeroes();
+    this.getHeroes();
   }
-
-  gettingHeroes = async () => {
+  
+  getHeroes = async () => {
+    const MarvelClass = new MarvelService();
     try {
-      const data = await fetch(
-        //"http://gateway.marvel.com/v1/public/comics?ts=1&apikey=4247b383b33c327bf8f34f063ea12f11&hash=63f587732d01d61230c20ed1789341a2"
-        //"https://gateway.marvel.com/v1/public/characters?apikey=4247b383b33c327bf8f34f063ea12f11"
-        // "https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=4247b383b33c327bf8f34f063ea12f11&hash=63f587732d01d61230c20ed1789341a2"
-        "https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=349e7f8260f2e901f46c4bb2d3de202b&hash=b7d357b46149f83f432b1aee8834d8a3"
-      )
-        .then((res) => res.json())
-        .catch((err) => console.log(err));
-      // console.log(data);
+      const data = await MarvelClass.getCharacters();
+
+      console.log(data);
       this.setState({
         characters: data.data.results,
+        total: data.data.total,
+        limit: data.data.limit,
+        count: data.data.count,
+
         loading: false,
       });
+      console.log(this.state.total);
+      console.log(this.state.count);
+      console.log(this.state.limit);
     } catch (err) {
       console.log("err: ", err);
     }
   };
 
   render() {
+    const { total, count, limit } = this.state;
     const { characters } = this.state;
+    const pagesCount = Math.ceil(total / count);
+
+    const pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+      pages.push(i);
+    }
+    console.log(pages);
 
     return (
       <Switch>
@@ -63,9 +62,11 @@ class App extends React.Component {
           <Route exact path="/characters/:id" component={CharacterDetails} />
           <Route
             exact
-            path={["/",'/characters']}
+            path={["/", "/characters"]}
             render={() => (
               <CharacterList
+                currentPage={this.state.currentPage}
+                pages={pages}
                 characters={characters}
                 isLoaded={this.state.loading}
               />

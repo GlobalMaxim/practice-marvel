@@ -12,6 +12,9 @@
   flex-direction: column;
   padding: 30px;
 }
+.activeClass {
+  font-weight: bold;
+}
 
 /* .listStyle {
   flex: 2;
