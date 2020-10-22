@@ -15,40 +15,40 @@ class App extends React.Component {
       total: null,
       count: null,
       limit: null,
+      offset: 0,
       currentPage: 1,
     };
   }
 
-  componentDidMount() {
-    this.getHeroes();
-  }
+  // componentDidMount() {
+  //   this.getHeroes();
+  // }
   
-  getHeroes = async () => {
-    const MarvelClass = new MarvelService();
-    try {
-      const data = await MarvelClass.getCharacters();
+  // getHeroes = async () => {
+  //   const MarvelClass = new MarvelService();
+  //   try {
+  //     const data = await MarvelClass.getCharacters(20);
 
-      console.log(data);
-      this.setState({
-        characters: data.data.results,
-        total: data.data.total,
-        limit: data.data.limit,
-        count: data.data.count,
-
-        loading: false,
-      });
-      console.log(this.state.total);
-      console.log(this.state.count);
-      console.log(this.state.limit);
-    } catch (err) {
-      console.log("err: ", err);
-    }
-  };
+  //     console.log(data);
+  //     this.setState({
+  //       characters: data.data.results,
+  //       total: data.data.total,
+  //       limit: data.data.limit,
+  //       offset: data.data.offset,
+  //       loading: false,
+  //     });
+  //     console.log(this.state.total);
+  //     console.log(this.state.count);
+  //     console.log(this.state.limit);
+  //   } catch (err) {
+  //     console.log("err: ", err);
+  //   }
+  // };
 
   render() {
-    const { total, count, limit } = this.state;
+    const { total, limit } = this.state;
     const { characters } = this.state;
-    const pagesCount = Math.ceil(total / count);
+    const pagesCount = Math.ceil(total / limit);
 
     const pages = [];
     for (let i = 1; i <= pagesCount; i++) {
@@ -65,10 +65,10 @@ class App extends React.Component {
             path={["/", "/characters"]}
             render={() => (
               <CharacterList
-                currentPage={this.state.currentPage}
-                pages={pages}
-                characters={characters}
-                isLoaded={this.state.loading}
+                // currentPage={this.state.currentPage}
+                // pages={pages}
+                // characters={characters}
+                // isLoaded={this.state.loading}
               />
             )}
           />

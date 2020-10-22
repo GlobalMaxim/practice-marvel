@@ -1,0 +1,12 @@
+.Pagination > span {
+  cursor: pointer;
+}
+
+.Pagination > span:hover {
+  color: rgb(247, 113, 52);
+  font-weight: bold;
+}
+
+.activeClass {
+  font-weight: bold;
+}

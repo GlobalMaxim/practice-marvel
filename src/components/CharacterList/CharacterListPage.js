@@ -1,67 +1,82 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "../CharacterList/CharacterList.module.css";
 import Character from "../Character/Character";
 import Table from "react-bootstrap/Table";
 import Spinner from "../UI/Spinner/Spinner";
+import Pagination from "../UI/Pagination/Pagination";
 
-const CharacterList = ({ characters, isLoaded, pages, currentPage }) => {
-  const [activeListItem, setActiveListItem] = useState(null);
+import MarvelService from "../../services/MarvelService";
+
+const MarvelClass = new MarvelService();
+
+const CharacterList = () => {
+  const [characters, setCharacters] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [total, setTotal] = useState(null);
+  const [limit, setLimit] = useState(20);
+  const [offset, setOffset] = useState(0);
+  const [currentPage, setPage] = useState(1);
+
+  useEffect(() => {
+    getHeroes();
+  }, [offset]);
+
+  const handleCurrentPage = (page) => {
+    setPage(page);
+    setOffset((page - 1) * limit);
+  };
+
+  const getHeroes = async () => {
+    try {
+      setLoading(true);
+      const { data } = await MarvelClass.getCharacters(offset);
+      if (data) {
+        setCharacters(data.results);
+        setTotal(data.total);
+      }
+    } catch (err) {
+      console.log("err: ", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const renderCharacters = () =>
-    characters && characters.length > 0 ? (
+    characters?.length ? (
       <div className={classes.body}>
         <div>
-          {pages.map((p) => {
-            return (
-              <span className={currentPage === p && classes.activeClass}>
-                {p}
-              </span>
-            );
-          })}
+          <Pagination
+            total={total}
+            limit={limit}
+            handleCurrentPage={handleCurrentPage}
+            currentPage={currentPage}
+          />
         </div>
         <Table striped bordered hover style={{ width: "800" }}>
           <tbody style={{ width: "100%", alignItems: "center" }}>
             {characters.map((character, index) => (
               <Character
-                onShow={setActiveListItem}
                 character={character}
-                activeListItem={activeListItem}
                 key={index}
                 id={index}
+                offset={offset}
+                currentPage={currentPage}
+                characters={characters}
               />
             ))}
           </tbody>
         </Table>
-
-        {/* {activeListItem ? (
-          <div className="windowStyle">
-            {activeListItem ? (
-              <div style={{ color: "black" }}>
-                <div>
-                  <h3>ID персонажа: </h3>
-                  {activeListItem.id}
-                </div>
-                <div>
-                  <h3>Имя персонажа:</h3>
-                  {activeListItem.name}
-                </div>
-              </div>
-            ) : null}
-          </div>
-        ) : null} */}
       </div>
     ) : null;
 
-  return (
-    <div className={classes.Character}>
-      {isLoaded ? (
-        <div style={{ position: "absolute", top: "50%", left: "50%" }}>
-          <Spinner />
-        </div>
-      ) : (
-        renderCharacters()
-      )}
-    </div>
-  );
+  if (loading) {
+    return (
+      <div style={{ position: "absolute", top: "50%", left: "50%" }}>
+        <Spinner />
+      </div>
+    );
+  }
+
+  return <div className={classes.Character}>{renderCharacters()}</div>;
 };
 export default CharacterList;
