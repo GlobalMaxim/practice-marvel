@@ -44,7 +44,7 @@ const CharacterList = () => {
   const renderCharacters = () =>
     characters?.length ? (
       <div className={classes.body}>
-        <div>
+        <div style={{marginBottom: 10}}>
           <Pagination
             total={total}
             limit={limit}

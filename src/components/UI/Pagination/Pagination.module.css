@@ -1,12 +1,25 @@
 .Pagination > span {
   cursor: pointer;
+  margin: 1px;
+  padding: 3px 7px;
+  border: 1px solid rgb(165, 85, 240);
+  border-radius: 10px;
+  background-color: rgba(59, 208, 228, .3);
 }
 
 .Pagination > span:hover {
-  color: rgb(247, 113, 52);
+  color: rgb(99, 233, 94);
   font-weight: bold;
 }
 
+.Pagination > span > a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+
 .activeClass {
   font-weight: bold;
+  color: rgb(247, 113, 52);
 }

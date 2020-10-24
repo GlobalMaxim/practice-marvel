@@ -3,6 +3,7 @@ import "./App.css";
 import CharacterList from "./components/CharacterList/CharacterListPage";
 import { Redirect, Route, Switch } from "react-router-dom";
 import CharacterDetails from "./components/CharacterDetails/CharacterDetails";
+import CharactersListPage from './components/CharacterList/CharacterListPage'
 import Spinner from "./components/UI/Spinner/Spinner";
 import MarvelService from "./services/MarvelService.js";
 
@@ -60,6 +61,7 @@ class App extends React.Component {
       <Switch>
         <div>
           <Route exact path="/characters/:id" component={CharacterDetails} />
+          <Route exact path="/characters?page=page" component={CharactersListPage}/>
           <Route
             exact
             path={["/", "/characters"]}

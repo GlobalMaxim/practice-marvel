@@ -1,73 +1,75 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import classes from "./Pagination.module.css";
+import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 const Pagination = ({ total, limit, handleCurrentPage, currentPage }) => {
-  // const [currentPage, setCurrentPage] = useState(1);
-  const [spans, setSpans] = useState(document.getElementsByTagName("span"));
   const pagesCount = Math.ceil(total / limit);
-  const pages = [];
+  const [pages, setPages] = useState([]);
 
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
+  useEffect(() => {
+    minimalizePages(currentPage);
+  }, [currentPage]);
+
+  const minimalizePages = (currentPage) => {
+    const pagesArr = [];
+    handleCurrentPage(currentPage);
+    if (currentPage - 3 < 0) {
+      pagesArr.push(currentPage);
+      pagesArr.push(currentPage + 1);
+      pagesArr.push(currentPage + 2);
+      pagesArr.push(currentPage + 3);
+      pagesArr.push("...");
+      pagesArr.push(pagesCount);
+    } else if (currentPage + 3 > total) {
+      pagesArr.push(1);
+      pagesArr.push("...");
+      pagesArr.push(currentPage - 3);
+      pagesArr.push(currentPage - 2);
+      pagesArr.push(currentPage - 1);
+      pagesArr.push(currentPage);
+    } else {
+      pagesArr.push(1);
+      pagesArr.push("...");
+      pagesArr.push(currentPage - 3);
+      pagesArr.push(currentPage - 2);
+      pagesArr.push(currentPage - 1);
+      pagesArr.push(currentPage);
+      pagesArr.push(currentPage + 1);
+      pagesArr.push(currentPage + 2);
+      pagesArr.push(currentPage + 3);
+      pagesArr.push("...");
+      pagesArr.push(pagesCount);
+    }
+    setPages(pagesArr);
+  };
+
+  console.log(typeof currentPage);
+
+  const showPagination = () =>
+    pages?.length
+      ? pages.map((page) => (
+          <span
+            onClick={() => {
+              if (typeof page === "number") {
+                minimalizePages(page);
+              } else {
+              }
+            }}
+            className={currentPage === page && classes.activeClass}
+          >
+            <NavLink to={"characters?page=" + page}>{page}</NavLink>
+          </span>
+        ))
+      : null;
+
+  return <div className={classes.Pagination}>{showPagination()}</div>;
+  {
+    /* <NavLink to={"characters?page=" + page}></NavLink>; */
   }
-  console.log(spans);
-  // if (currentPage === 1)
-  //   return (
-  //     <div>
-  //       <span>{currentPage}</span>
-  //       <span>...</span>
-  //       <span>{currentPage + 1}</span>
-  //     </div>
-  //   );
-
-  // const setPage = (page) => {
-  //   setCurrentPage(page);
-  //   onCurrentPage(page);
-  // };
-
-  // const range = (from, to, step = 1) => {
-  //   let i = from;
-  //   const range = [];
-
-  //   while (i <= to) {
-  //     range.push(i);
-  //     i += step;
-  //   }
-
-  //   return range;
-  // };
-
-  // const fetchPageNumbers = () => {
-  //   const totalNumbers = pageNeighbours * 2 + 3;
-  //   const totalBlocks = totalNumbers + 2;
-
-  //   if (pagesCount > totalBlocks ) {
-  //     const startPage = Math.max(2, currentPage - pageNeighbours)
-  //     const endPage = Math.min(pagesCount - 1, currentPage + pageNeighbours)
-  //   }
-  // };
-
-  return (
-    <div className={classes.Pagination}>
-      {pages.map((page) => (
-        <span
-          onClick={() => handleCurrentPage(page)}
-          className={currentPage === page && classes.activeClass}
-        >
-          {page}
-        </span>
-      ))}
-    </div>
-  );
-
-  // if (currentPage - 3 < 0)
-  //   return (
-  //     <div>
-  //       <span>{pages[1]}</span>
-  //       <span>{pages[pages.length]}</span>
-  //     </div>
-  //   );
+};
+Pagination.propTypes = {
+  page: PropTypes.number,
 };
 
 export default Pagination;
